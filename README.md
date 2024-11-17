@@ -1,6 +1,9 @@
 Tensor_invitation
+
 Использовать команду pip install -r requirements.txt
+
 При запуске тестов использовать pytest --html=reports/report.html --self-contained-html
+
 При желании через параметр params=["chrome", "firefox"] в фикстуре driver можно использовать разные браузеры
 
 Тестовое задание на позицию разработчика в
