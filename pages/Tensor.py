@@ -1,30 +1,19 @@
 from selenium.webdriver.common.by import By
 from pages.BasePage import BasePage
 
-
 class TensorHomePage(BasePage):
-    """
-    Главная страница компании Тензор
-    """
-    def __init__(self, driver):
-        super().__init__(driver)
+    """Главная страница компании Тензор"""
 
     power_in_people = (By.XPATH, "//*[text()[contains(.,'Сила в людях')]]")
     more_link = (By.CSS_SELECTOR, '[href="/about"].tensor_ru-Index__link')
-    working_images = (By.CSS_SELECTOR, '.tensor_ru-About__block3')
+    working_images = (By.CSS_SELECTOR, '.tensor_ru-About__block3 .s-Grid-col img')
 
-    def open(self):
-        """
-        Перейти на главную страницу Тензора
-        """
+    def is_power_in_people_visible(self):
+        return self.find_element(self.power_in_people).is_displayed()
 
-        self.driver.get("https://tensor.ru/")
+    def click_more_link(self):
+        self.find_element(self.more_link).click()
 
-    def verify_working_images(self):
-        """
-        Проверить, что все изображения блока 'Работаем' одного размера
-        """
-
-        images = self.driver.find_elements(By.CSS_SELECTOR, '.s-Grid-col img')
-        same_images_check = [(image.size['width'], image.size['height']) for image in images[:4]]
-        assert len(set(same_images_check)) == 1
+    def get_working_images_sizes(self):
+        images = self.driver.find_elements(*self.working_images)
+        return [(image.size['width'], image.size['height']) for image in images]

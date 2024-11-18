@@ -1,13 +1,10 @@
 from selenium.webdriver.common.by import By
 from pages.BasePage import BasePage
 
-
 class SbisHomePage(BasePage):
-    def __init__(self, driver):
-        super().__init__(driver)
+    """Главная страница СБИС"""
 
     link = "https://sbis.ru/"
-
     contacts = (By.LINK_TEXT, "Контакты")
     tensor_link = (By.CSS_SELECTOR, "[href='https://tensor.ru/']")
     region = (By.CSS_SELECTOR, '.sbis_ru-Region-Chooser__text')
@@ -15,34 +12,23 @@ class SbisHomePage(BasePage):
     footer_dl = (By.CSS_SELECTOR, '[href="/download"]')
 
     def open(self):
-        """
-        Открыть страницу
-        """
-
+        """Открыть главную страницу"""
         self.driver.get(self.link)
 
-    def check_region(self, region_name: str):
-        """
-        Проверить выбранный регион
-        :param region_name: название региона
-        """
+    def click_contacts(self):
+        self.find_element(self.contacts).click()
 
-        region = self.find_element(self.region)
-        assert region.text == region_name 
+    def click_tensor_link(self):
+        self.find_element(self.tensor_link).click()
 
-    def check_partners_region(self, partner_text: str):
-        """
-        Проверить список партнеров текущего региона
-        :param partner_text: партнер
-        """
+    def click_region(self):
+        self.find_element(self.region).click()
 
-        partners_list = self.find_element(self.partners_list)
-        assert partner_text in partners_list.text
+    def click_footer_download(self):
+        self.find_element(self.footer_dl).click()
 
-    def check_title(self, title: str):
-        """
-        Проверить название сайта
-        :param title:название сайта
-        """
+    def get_region_text(self):
+        return self.find_element(self.region).text
 
-        assert self.driver.title == title
+    def get_partners_text(self):
+        return self.find_element(self.partners_list).text
